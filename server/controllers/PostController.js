@@ -1,5 +1,44 @@
 const Post = require('../models/Post');
 
+/**
+ * @swagger
+ * /posts:
+ *   post:
+ *     summary: "Create a new post"
+ *     description: "This endpoint allows you to create a new post with a title and content."
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "New Post"
+ *               content:
+ *                 type: string
+ *                 example: "This is a new post content."
+ *     responses:
+ *       201:
+ *         description: "Post created successfully."
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 title:
+ *                   type: string
+ *                   example: "New Post"
+ *                 content:
+ *                   type: string
+ *                   example: "This is a new post content."
+ *       500:
+ *         description: "Internal server error"
+ */
 const CreatePost = async (req, res) => {
     const {title, content} = req.body;
     try {
@@ -10,16 +49,6 @@ const CreatePost = async (req, res) => {
     }
 };
 
-const ReadPost = async (req, res) => {
-    try {
-        const posts = await post.findAll();
-        res.status(200).json(posts);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 module.exports = {
     CreatePost,
-    ReadPost,
 }
