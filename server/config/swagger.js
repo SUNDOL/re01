@@ -9,6 +9,20 @@ const swaggerOptions = {
       version: '1.0.0',
       description: '게시판 CRUD API',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT"
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ],
     servers: [
       {
         url: 'http://localhost:5000',
