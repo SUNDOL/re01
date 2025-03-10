@@ -1,4 +1,4 @@
-const Post = require('../models/Post');
+const Post = require('../model/Post');
 
 /**
  * @swagger
@@ -39,8 +39,8 @@ const Post = require('../models/Post');
  *       500:
  *         description: "Internal server error"
  */
-const CreatePost = async (req, res) => {
-    const {title, content} = req.body;
+const createPost = async (req, res) => {
+    const { title, content } = req.body;
     try {
         const post = await Post.create({ title, content });
         res.status(201).json(post);
@@ -50,5 +50,5 @@ const CreatePost = async (req, res) => {
 };
 
 module.exports = {
-    CreatePost,
-}
+    createPost,
+};
