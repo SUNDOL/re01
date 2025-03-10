@@ -11,14 +11,16 @@ const userController = require("./controller/UserController");
 const app = express();
 const port = 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/api/user', userController);
 app.use('/api/post', postController);
-
 
 sequelize.sync({ force: true }).then(() => {
     console.log("DB Sync Complete");
