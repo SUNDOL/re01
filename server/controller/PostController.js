@@ -1,3 +1,10 @@
+/**
+ * @swagger
+ * tags:
+ *   - name: Post
+ *     description: Post 관련 API
+ */
+
 const express = require("express");
 const postService = require("../service/PostService");
 

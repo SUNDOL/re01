@@ -1,4 +1,5 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const express = require("express");
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -15,8 +16,8 @@ const swaggerOptions = {
     ],
   },
   apis: [
-    './controllers/PostController.js',
-    './index.js'],
+    './controller/*.js',
+  ],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
