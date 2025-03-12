@@ -26,7 +26,7 @@ router.get("/ncheck/:nickname", async (req, res) => {
 router.post("/", async (req, res) => {
     const { email, password, nickname } = req.body;
     try {
-        const info = await userService.signUp(email, password, nickname);
+        const info = await userService.createUser(email, password, nickname);
         return res.status(201).json({ msg: "회원가입 성공.", data: { id: info.uId, email: info.uEmail, nickname: info.uNickname } });
     } catch (e) {
         return res.status(e.status || 500).json({ msg: e.msg || "서버 오류." });

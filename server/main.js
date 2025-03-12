@@ -1,7 +1,8 @@
 const express = require("express");
-const sequelize = require('./config/db');
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
+const sequelize = require('./config/db');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./config/swagger');
 
@@ -16,6 +17,8 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
 }));
+
+app.use(cookieParser());
 
 app.use(express.json());
 

@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
                     return res.status(401).json({ msg: "유효하지 않은 Access Token임." });
                 };
                 const aToken2 = jwt.sign(
-                    { id: user.uId, email: user.uEmail, nickname: user.uNickname },
+                    { id: user.uId, email: user.uEmail },
                     process.env.JWT_ACCESS_SECRET,
                     { expiresIn: process.env.JWT_ACCESS_EXPIRES_IN }
                 );
