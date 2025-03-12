@@ -24,13 +24,23 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+    },
+    uRefreshToken: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
-    timestamps: true
-});
-
-User.beforeCreate(async (user) => {
-    user.uPassword = await bcrypt.hash(user.uPassword, 10);
+    timestamps: true,
+    hooks: {
+        beforeCreate: async (user) => {
+            user.uPassword = await bcrypt.hash(user.uPassword, 10);
+        },
+        beforeUpdate: async (user) => {
+            if (user.changed("uPassword") && user.uPassword) {
+                user.uPassword = await bcrypt.hash(user.uPassword, 10);
+            };
+        }
+    }
 });
 
 module.exports = User;
