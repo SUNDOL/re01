@@ -13,7 +13,7 @@ const login = async (email, password) => {
         throw { status: 400, msg: "이메일 또는 패스워드가 잘못되었음." };
     };
     const atk = jwt.sign(
-        { id: logUser.uId, email: logUser.uEmail, nickname: logUser.uNickname },
+        { id: logUser.uId, email: logUser.uEmail },
         process.env.JWT_ACCESS_SECRET,
         { expiresIn: process.env.JWT_ACCESS_EXPIRES_IN }
     );
@@ -24,7 +24,7 @@ const login = async (email, password) => {
     );
     const [updated] = await User.update({ uRefreshToken: rtk }, { where: { uId: logUser.uId } });
     if (!updated) {
-        throw { status: 500, msg: "Refresh Token 저장 실패."};
+        throw { status: 500, msg: "Refresh Token 저장 실패." };
     };
     return { atk, rtk };
 };

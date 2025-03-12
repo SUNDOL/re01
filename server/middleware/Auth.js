@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     };
     try {
         const dec1 = jwt.verify(aToken, process.env.JWT_ACCESS_SECRET);
-        req.user = { id: dec1.id, email: dec1.email, nickname: dec1.nickname };
+        req.user = { id: dec1.id, email: dec1.email };
         if (Date.now() >= dec1.exp * 1000) {
             const rToken = req.header("x-refresh-token");
             if (!rToken) {
