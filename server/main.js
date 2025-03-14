@@ -11,6 +11,8 @@ const authController = require("./controller/AuthController");
 const userController = require("./controller/UserController");
 const postController = require('./controller/PostController');
 
+const { generateDummyData } = require("./dummydata");
+
 const app = express();
 const port = 5000;
 
@@ -31,6 +33,7 @@ app.use('/post', postController);
 
 sequelize.sync({ force: true }).then(() => {
     console.log("DB Sync Complete");
+    generateDummyData();
 });
 
 app.listen(port, () => {

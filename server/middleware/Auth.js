@@ -36,11 +36,11 @@ const refreshAccessToken = async (req, res, next) => {
 };
 
 const authMiddleware = async (req, res, next) => {
-    const { auth } = req.headers;
-    if (!auth?.startsWith("Bearer ")) {
+    const { authorization } = req.headers;
+    if (!authorization?.startsWith("Bearer ")) {
         return res.response(401);
     };
-    const aToken = auth.split(" ")[1];
+    const aToken = authorization.split(" ")[1];
     try {
         const dec = jwt.verify(aToken, process.env.JWT_ACCESS_SECRET);
         req.user = {

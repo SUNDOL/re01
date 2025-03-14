@@ -17,8 +17,8 @@ router.post("/", async (req, res) => {
 router.get("/", authMiddleware, async (req, res) => {
     const { id } = req.user;
     try {
-        const info = await userService.readUser(id);
-        return res.response(200, info);
+        const data = await userService.readUser(id);
+        return res.response(200, data);
     } catch (e) {
         return res.response(e.code);
     };
@@ -28,8 +28,8 @@ router.put("/", authMiddleware, async (req, res) => {
     const { id } = req.user;
     const { nickname } = req.body;
     try {
-        const info = await userService.updateUser(id, nickname);
-        return res.response(200, info);
+        const data = await userService.updateUser(id, nickname);
+        return res.response(200, data);
     } catch (e) {
         return res.response(e.code);
     };
@@ -38,8 +38,8 @@ router.put("/", authMiddleware, async (req, res) => {
 router.get("/echeck/:email", async (req, res) => {
     const { email } = req.params;
     try {
-        const check = await userService.emailCheck(email);
-        return res.response(200, check);
+        const data = await userService.emailCheck(email);
+        return res.response(200, data);
     } catch (e) {
         return res.response(e.code);
     };
@@ -48,8 +48,8 @@ router.get("/echeck/:email", async (req, res) => {
 router.get("/ncheck/:nickname", async (req, res) => {
     const { nickname } = req.params;
     try {
-        const check = await userService.nicknameCheck(nickname);
-        return res.response(200, check);
+        const data = await userService.nicknameCheck(nickname);
+        return res.response(200, data);
     } catch (e) {
         return res.response(e.code);
     };
