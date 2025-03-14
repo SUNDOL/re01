@@ -13,24 +13,20 @@ const login = async (email, password) => {
         if (!pwCheck) {
             throw { code: 401 };
         };
-        const atk = jwt.sign(
-            {
-                id: logUser.uId,
-                email: logUser.uEmail
-            },
-            process.env.JWT_ACCESS_SECRET,
-            {
-                expiresIn: process.env.JWT_ACCESS_EXPIRES_IN
-            }
+        const atk = jwt.sign({
+            id: logUser.uId,
+            email: logUser.uEmail
+        },
+            process.env.JWT_ACCESS_SECRET, {
+            expiresIn: process.env.JWT_ACCESS_EXPIRES_IN
+        }
         );
-        const rtk = jwt.sign(
-            {
-                id: logUser.uId, email: logUser.uEmail
-            },
-            process.env.JWT_REFRESH_SECRET,
-            {
-                expiresIn: process.env.JWT_REFRESH_EXPIRES_IN
-            }
+        const rtk = jwt.sign({
+            id: logUser.uId, email: logUser.uEmail
+        },
+            process.env.JWT_REFRESH_SECRET, {
+            expiresIn: process.env.JWT_REFRESH_EXPIRES_IN
+        }
         );
         const [updated] = await User.update({ uRefreshToken: rtk }, { where: { uId: logUser.uId } });
         if (!updated) {

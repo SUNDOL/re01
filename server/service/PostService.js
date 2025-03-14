@@ -11,12 +11,10 @@ const listPost = async (page, limit) => {
                 "pWriter",
                 "updatedAt"
             ],
-            include: [
-                {
-                    model: User,
-                    attributes: ["uNickname"]
-                }
-            ],
+            include: [{
+                model: User,
+                attributes: ["uNickname"]
+            }],
             offset,
             limit,
             order: [
@@ -65,12 +63,10 @@ const readPost = async (id, uId) => {
                 "createdAt",
                 "updatedAt"
             ],
-            include: [
-                {
-                    model: User,
-                    attributes: ["uNickname"]
-                }
-            ]
+            include: [{
+                model: User,
+                attributes: ["uNickname"]
+            }]
         });
         if (!data) {
             throw { code: 404 };
@@ -103,12 +99,10 @@ const updatePost = async (id, uId, { title, content }) => {
                 "createdAt",
                 "updatedAt"
             ],
-            include: [
-                {
-                    model: User,
-                    attributes: ["uNickname"]
-                }
-            ]
+            include: [{
+                model: User,
+                attributes: ["uNickname"]
+            }]
         });
         if (!data) {
             throw { code: 404 };
