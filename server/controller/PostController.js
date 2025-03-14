@@ -1,6 +1,6 @@
 const express = require("express");
 const postService = require("../service/PostService");
-const { authMiddleware } = require("../middleware/Auth");
+const { authMiddleware, optionalAuthMiddleware } = require("../middleware/Auth");
 const { resHandler } = require("../middleware/Res");
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
         const { totalPosts, posts } = await postService.listPost(page, limit);
         return res.response(200, { totalPosts, posts });
     } catch (e) {
-        return res.response(500);
+        return res.response(e.code);
     };
 });
 
@@ -25,12 +25,30 @@ router.post("/", authMiddleware, async (req, res) => {
     };
 });
 
-router.put("/", async (req, res) => {
-
+router.get("/:id", optionalAuthMiddleware, async (req, res) => {
+    const { id } = req.params;
+    const uId = req.user ? req.user.id : null;
+    try {
+        const data = await postService.readPost(id, uId);
+        if (!data) {
+            return res.response(404);
+        };
+        return res.response(200, data);
+    } catch (e) {
+        return res.response(e.code);
+    };
 });
 
-router.get("/:id", async (req, res) => {
-
+router.put("/:id", authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const uId = req.user.id;
+    try {
+        const data = await postService.updatePost(id, uId, { title, content });
+        return res.response(200, data);
+    } catch (e) {
+        return res.response(e.code);
+    };
 });
 
 module.exports = router;

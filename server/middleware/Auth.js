@@ -7,7 +7,7 @@ const refreshAccessToken = async (req, res, next) => {
     try {
         const { rtk } = req.cookies;
         if (!rtk) {
-            return res.response(401);
+            return next();
         };
         const dec = jwt.verify(rtk, process.env.JWT_REFRESH_SECRET);
         const user = await User.findByPk(dec.id);
@@ -31,7 +31,7 @@ const refreshAccessToken = async (req, res, next) => {
         };
         next();
     } catch (e) {
-        return res.response(401);
+        return next();
     };
 };
 
@@ -56,4 +56,27 @@ const authMiddleware = async (req, res, next) => {
     };
 };
 
-module.exports = { authMiddleware, refreshAccessToken };
+const optionalAuthMiddleware = async (req, res, next) => {
+    const { authorization } = req.headers;
+    if (!authorization?.startsWith("Bearer ")) {
+        req.user = null;
+        return next();
+    };
+    const aToken = authorization.split(" ")[1];
+    try {
+        const dec = jwt.verify(aToken, process.env.JWT_ACCESS_SECRET);
+        req.user = {
+            id: dec.id,
+            email: dec.email
+        };
+        return next();      
+    } catch (e) {
+        if (e.name === "TokenExpiredError") {
+            return refreshAccessToken(req, res, next);
+        };
+        req.user = null;
+        return next();
+    };
+};
+
+module.exports = { authMiddleware, refreshAccessToken, optionalAuthMiddleware };
