@@ -9,9 +9,11 @@ router.post("/login", async (req, res) => {
         res.cookie("rtk", rtk, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             maxAge: 24 * 60 * 60 * 1000
         });
-        return res.status(200).json({ msg: "로그인 성공.", atk });
+        res.setHeader("Authorization", `Bearer ${atk}`);
+        return res.status(200).json({ msg: "로그인 성공.", atk: atk });
     } catch (e) {
         return res.status(e.status || 500).json({ msg: e.msg || "서버 오류." });
     };

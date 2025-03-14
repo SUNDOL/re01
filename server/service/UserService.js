@@ -1,14 +1,5 @@
 const User = require("../model/User");
-
-const emailCheck = async (email) => {
-    const check1 = await User.findOne({ where: { uEmail: email } });
-    return !check1;
-};
-
-const nicknameCheck = async (nickname) => {
-    const check2 = await User.findOne({ where: { uNickname: nickname } });
-    return !check2;
-};
+const bcrypt = require("bcryptjs");
 
 const createUser = async (email, password, nickname) => {
     const eCheck = await User.findOne({ where: { uEmail: email } });
@@ -38,9 +29,43 @@ const readUser = async (id) => {
     };
 };
 
+const updateUser = async (id, nickname) => {
+    const user = await User.findByPk(id);
+    if (!user) {
+        throw { status: 404, msg: "사용자를 찾을 수 없음." };
+    };
+    const updateUser = await user.update({ uNickname: nickname });
+    return { nickname: updateUser.uNickname, uDate: updateUser.uDate };
+};
+
+const emailCheck = async (email) => {
+    const check1 = await User.findOne({ where: { uEmail: email } });
+    return !check1;
+};
+
+const nicknameCheck = async (nickname) => {
+    const check2 = await User.findOne({ where: { uNickname: nickname } });
+    return !check2;
+};
+
+const updatePassword = async (id, currentPw, newPw) => {
+    const user = await User.findByPk(id);
+    if (!user) {
+        throw { status: 404, msg: "사용자를 찾을 수 없음." };
+    };
+    const pwMatch = await bcrypt.compare(currentPw, user.uPassword);
+    if (!pwMatch) {
+        throw { status: 400, msg: "패스워드 불일치." };
+    };
+    user.uPassword = newPw;
+    await user.save();
+};
+
 module.exports = {
-    emailCheck,
-    nicknameCheck,
     createUser,
     readUser,
+    updateUser,
+    emailCheck,
+    nicknameCheck,
+    updatePassword
 };
