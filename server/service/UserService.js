@@ -49,12 +49,12 @@ const updateUser = async (id, nickname) => {
 
 const emailCheck = async (email) => {
     const check1 = await User.findOne({ where: { uEmail: email } });
-    return check1 ? "no" : "available";
+    return check1 ? "not available" : "available";
 };
 
 const nicknameCheck = async (nickname) => {
     const check2 = await User.findOne({ where: { uNickname: nickname } });
-    return check2 ? "no" : "available";
+    return check2 ? "not available" : "available";
 };
 
 const updatePassword = async (id, currentPw, newPw) => {

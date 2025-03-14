@@ -13,6 +13,6 @@ const MESSAGES = {
     504: "Gateway Timeout"
 };
 
-const getMessage = (code) => MESSAGES[code] || "알 수 없는 오류";
+const getMessage = (code) => MESSAGES[code];
 
 module.exports = getMessage;

@@ -34,6 +34,6 @@ sequelize.sync({ force: true }).then(() => {
 });
 
 app.listen(port, () => {
-    console.log(`Success: https://localhost:${port}`);
-    console.log(`Swagger UI available at http://localhost:${port}/api/docs`);
+    console.log(`Server ON http://localhost:${port}`);
+    console.log(`Swagger UI http://localhost:${port}/api/docs`);
 });
