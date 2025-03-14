@@ -22,10 +22,10 @@ router.post("/login", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
     const { rtk } = req.cookies;
-    if (!rtk) {
-        return res.response(401);
-    };
     try {
+        if (!rtk) {
+            return res.response(401);
+        };
         await authService.logout(rtk);
         res.clearCookie("rtk");
         return res.response(200);
