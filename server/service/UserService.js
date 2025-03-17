@@ -61,8 +61,21 @@ const updateUser = async (id, nickname) => {
         const newData = await data.update({ uNickname: nickname });
         return {
             nickname: newData.uNickname,
-            uDate: newData.uDate
+            uDate: newData.updatedAt
         };
+    } catch (e) {
+        throw { code: e.code };
+    };
+};
+
+const deleteUser = async (id) => {
+    try {
+        const data = await User.findByPk(id);
+        if (!data) {
+            throw { code: 404 };
+        };
+        await data.destroy();
+        return true;
     } catch (e) {
         throw { code: e.code };
     };
@@ -107,6 +120,7 @@ module.exports = {
     createUser,
     readUser,
     updateUser,
+    deleteUser,
     emailCheck,
     nicknameCheck,
     updatePassword

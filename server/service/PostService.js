@@ -127,9 +127,34 @@ const updatePost = async (id, uId, { title, content }) => {
     };
 };
 
+const deletePost = async (id, uId) => {
+    try {
+        const data = await Post.findOne({
+            where: {
+                pId: id
+            },
+            include: [{
+                model: User,
+                attributes: ["uId"],
+            }]
+        });
+        if (!data) {
+            throw { code: 404 }; 
+        };
+        if (data.pWriter !== uId) {
+            throw { code: 401 };
+        };
+        await data.destroy();
+        return true;
+    } catch (e) {
+        throw { code: e.code };
+    };
+};
+
 module.exports = {
     listPost,
     createPost,
     readPost,
     updatePost,
+    deletePost
 };

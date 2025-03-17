@@ -51,4 +51,15 @@ router.put("/:id", authMiddleware, async (req, res) => {
     };
 });
 
+router.delete("/:id", authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    const uId = req.user ? req.user.id : null;
+    try {
+        const data = await postService.deletePost(id, uId);
+        return res.response(200);
+    } catch (e) {
+        return res.response(e.code);
+    };
+});
+
 module.exports = router;
