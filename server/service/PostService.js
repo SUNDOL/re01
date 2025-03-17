@@ -81,7 +81,7 @@ const readPost = async (id, uId) => {
             can_edit: uId === data.pWriter
         };
     } catch (e) {
-        throw { code: 500 };
+        throw { code: e.code };
     };
 };
 
