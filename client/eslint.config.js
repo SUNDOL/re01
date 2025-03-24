@@ -29,5 +29,9 @@ export default [
         { allowConstantExport: true },
       ],
     },
+    env: {
+      node: true,
+      es2011: true,
+    },
   },
 ]
