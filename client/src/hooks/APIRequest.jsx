@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useAuthStore } from "../stores/AuthStore";
+import useAuthStore from "../stores/AuthStore";
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: import.meta.env.MODE === "production"
-        ? import.meta.env.API_PROD_ADDRESS
-        : import.meta.env.API_DEV_ADDRESS,
+    baseURL: import.meta.env.VITE_MODE === "production"
+        ? import.meta.env.VITE_API_PROD_ADDRESS
+        : import.meta.env.VITE_API_DEV_ADDRESS,
     withCredentials: true
 });
 

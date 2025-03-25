@@ -1,7 +1,13 @@
+import Header from './pages/Header';
+import List from './pages/List';
+
 function App() {
 
   return (
-    <h1 className="text-3xl font-bold underline">Success</h1>
+    <>
+      <Header />
+      <List />
+    </>
   )
 }
 
